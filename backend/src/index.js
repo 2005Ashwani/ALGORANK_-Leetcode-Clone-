@@ -17,7 +17,6 @@ const paymentIntegration = require("./routes/paymentIntegration");
 // Add your deployed frontend's URL here
 const allowedOrigins = [
   'https://leetcodes-5.onrender.com',               // Your local dev frontend
-  'https://your-live-frontend-url.com'   // <--- REPLACE THIS with your deployed frontend URL
 ];
 
 app.use(cors({
