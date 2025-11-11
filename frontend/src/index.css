@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+       /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap'); */
+
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #2d3748; /* Darker track */
+          border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #6b46c1; /* Purple thumb */
+          border-radius: 10px;
+          border: 2px solid #2d3748; /* Border to match track */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #805ad5; /* Lighter purple on hover */
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes messagePopUser {
+          0% {
+            opacity: 0;
+            transform: translateX(20px) scale(0.9);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+          }
+        }
+
+        .animate-message-pop-user {
+          animation: messagePopUser 0.4s ease-out forwards;
+        }
+
+        @keyframes messagePopModel {
+          0% {
+            opacity: 0;
+            transform: translateX(-20px) scale(0.9);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+          }
+        }
+
+        .animate-message-pop-model {
+          animation: messagePopModel 0.4s ease-out forwards;
+        }
+
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+    
+
+
+        /* Algo Snap  */
+        @import "tailwindcss";
+
+
+/* Small devices (≥640px) */
+@media (max-width: 760px) {
+.treebutton{
+    font-size: 8px;
+    padding-left: 0.5px;
+    padding-right: 0.5px;
+}
+}
+/* searching-sorting */
+@media (min-width: 740px) {
+.two-box{
+margin-top: 60;
+ } 
+}
