@@ -1,43 +1,59 @@
-const express = require("express")
-const app = express()
-require('dotenv').config()
-const main = require('./config/db')
-const userRoutes = require('./routes/userAuthontication')
-const problemRouter = require('./routes/ProblemCreator')
-const submitRouter = require("./routes/Submits")
+const express = require("express");
+const app = express();
+require('dotenv').config();
+const main = require('./config/db');
+const userRoutes = require('./routes/userAuthontication');
+const problemRouter = require('./routes/ProblemCreator');
+const submitRouter = require("./routes/Submits");
 const cookieParser = require('cookie-parser');
 const redisClient = require("./config/Redis");
-const videoRouter = require("./routes/videoCreater")
-const aiRouter = require("./routes/aiChatting")
-const User = require("./models/user")
+const videoRouter = require("./routes/videoCreater");
+const aiRouter = require("./routes/aiChatting");
+const User = require("./models/user");
+const cors = require("cors");
+const paymentIntegration = require("./routes/paymentIntegration");
 
+// --- START: UPDATED CORS CONFIGURATION ---
+// Add your deployed frontend's URL here
+const allowedOrigins = [
+  'http://localhost:5173',               // Your local dev frontend
+  'https://your-live-frontend-url.com'   // <--- REPLACE THIS with your deployed frontend URL
+];
 
-
-const cors = require("cors")
-const paymentIntegration = require("./routes/paymentIntegration")
-
-// Use its as a middleware    // Connect Frontend and Backend
 app.use(cors({
-    origin: 'http://localhost:5173', // frontend URL  // only this URL Can access
-    // origin: '*', // frontend URL Ab Koi vi access kar payaga
-    credentials: true, // Allow cookies to be sent
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like Postman, mobile apps, or server-to-server)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true, // Allow cookies
 }));
+// --- END: UPDATED CORS CONFIGURATION ---
 
 
+app.use(express.json());
+app.use(cookieParser());
 
-app.use(express.json())
-app.use(cookieParser())
+
+// --- START: NEW ROOT ROUTE ---
+// Handles GET requests to the base URL (/)
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to the Leetcodes API! Server is running." });
+});
+// --- END: NEW ROOT ROUTE ---
 
 
 app.use("/auth", userRoutes);
 app.use("/problem", problemRouter);
 app.use("/submission", submitRouter);
-
-app.use("/video", videoRouter)
-
-app.use("/ai",aiRouter)
-
-app.use("/paymentIntegration",paymentIntegration)
+app.use("/video", videoRouter);
+app.use("/ai", aiRouter);
+app.use("/paymentIntegration", paymentIntegration);
 
 
 // One-time index fix to drop unintended unique indexes that block registrations
@@ -71,8 +87,6 @@ const fixUserIndexes = async () => {
 }
 
 
-
-
 const initialConnection = async () => {
     try {
 
@@ -84,24 +98,14 @@ const initialConnection = async () => {
 
         // Connecting to Port Number
         app.listen(process.env.PORT, () => {
-
-            console.log("Listening at port 3000")
+            // Use PORT from environment variables, default to 3000 if not set
+            const port = process.env.PORT || 3000;
+            console.log(`Listening at port ${port}`);
         })
-
 
     } catch (error) {
         console.log("Error " + error)
-
     }
 }
 
-
-
-
-initialConnection()
-
-
-
-
-
-
+initialConnection();
