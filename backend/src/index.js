@@ -18,10 +18,10 @@ const paymentIntegration = require("./routes/paymentIntegration")
 
 // Use its as a middleware    // Connect Frontend and Backend
 app.use(cors({
-    origin: 'http://localhost:5173', 
-    
-    credentials: true, 
+  origin: "*",
 }));
+
+
 
 
 
