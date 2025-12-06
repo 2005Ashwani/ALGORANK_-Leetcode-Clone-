@@ -13,15 +13,32 @@ const User = require("./models/user")
 
 
 
-const cors = require("cors")
-const paymentIntegration = require("./routes/paymentIntegration")
+// const cors = require("cors")
+// const paymentIntegration = require("./routes/paymentIntegration")
 
-// Use its as a middleware    // Connect Frontend and Backend
-app.use(cors({
-    origin: 'http://localhost:5173', 
+// // Use its as a middleware    // Connect Frontend and Backend
+// app.use(cors({
+//     origin: 'http://localhost:5173', 
     
-    credentials: true, 
+//     credentials: true, 
+// }));
+
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://leetcode-backend-2-frontend.onrender.com'
+];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
+
 
 
 
