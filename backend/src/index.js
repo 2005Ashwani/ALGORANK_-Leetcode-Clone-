@@ -15,7 +15,7 @@ const paymentIntegration = require("./routes/paymentIntegration");
 const cors = require("cors");
 
 // ----------------------------
-// ✅ FIX CORS FOR RENDER
+// FIX CORS FOR RENDER
 // ----------------------------
 
 const allowedOrigins = [
@@ -38,7 +38,7 @@ app.use(
   })
 );
 
-app.options("*", cors());
+app.options("/*", cors());
 
 // ----------------------------
 
