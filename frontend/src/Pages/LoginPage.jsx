@@ -113,6 +113,30 @@ function LoginPage() {
 
         <button className="btn btn-primary w-[7vw] flex self-end">Login</button>
       </form>
+
+      <button
+  onClick={() => navigate("/signup")}
+  className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r 
+  from-purple-500 to-indigo-500 text-white font-semibold shadow-md hover:shadow-lg 
+  transition-all duration-300 hover:scale-105 cursor-pointer"
+>
+  <span>Create an Account</span>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M17 8l4 4m0 0l-4 4m4-4H3"
+    />
+  </svg>
+</button>
+      
     </div>
   );
 }
