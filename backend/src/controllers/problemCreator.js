@@ -254,7 +254,7 @@ const submittedProblem = async (req, res) => {
         const ans = await submission.find({ userId, problemId });
         console.log(ans)
         if (ans.length === 0) {
-            return res.status(404).send("No submission found for this problem by the users")
+            return res.status(404).send("No submission found for this problem by the user")
 
         }
 

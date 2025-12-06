@@ -1,50 +1,43 @@
-const express = require("express");
-const app = express();
-require('dotenv').config();
-const main = require('./config/db');
-const userRoutes = require('./routes/userAuthontication');
-const problemRouter = require('./routes/ProblemCreator');
-const submitRouter = require("./routes/Submits");
+const express = require("express")
+const app = express()
+require('dotenv').config()
+const main = require('./config/db')
+const userRoutes = require('./routes/userAuthontication')
+const problemRouter = require('./routes/ProblemCreator')
+const submitRouter = require("./routes/Submits")
 const cookieParser = require('cookie-parser');
 const redisClient = require("./config/Redis");
-const videoRouter = require("./routes/videoCreater");
-const aiRouter = require("./routes/aiChatting");
-const User = require("./models/user");
-const cors = require("cors");
-const paymentIntegration = require("./routes/paymentIntegration");
-
-// --- START: UPDATED CORS CONFIGURATION ---
-// Add your deployed frontend's URL here
-const allowedOrigins = [
-  'https://leetcodes-5.onrender.com',               // Your local dev frontend
-];
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  next();
-});
-
-app.use(express.json());
-app.use(cookieParser());
+const videoRouter = require("./routes/videoCreater")
+const aiRouter = require("./routes/aiChatting")
+const User = require("./models/user")
 
 
-// --- START: NEW ROOT ROUTE ---
-// Handles GET requests to the base URL (/)
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to the Leetcodes API! Server is running." });
-});
-// --- END: NEW ROOT ROUTE ---
+
+const cors = require("cors")
+const paymentIntegration = require("./routes/paymentIntegration")
+
+// Use its as a middleware    // Connect Frontend and Backend
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    
+    credentials: true, 
+}));
+
+
+
+app.use(express.json())
+app.use(cookieParser())
 
 
 app.use("/auth", userRoutes);
 app.use("/problem", problemRouter);
 app.use("/submission", submitRouter);
-app.use("/video", videoRouter);
-app.use("/ai", aiRouter);
-app.use("/paymentIntegration", paymentIntegration);
+
+app.use("/video", videoRouter)
+
+app.use("/ai",aiRouter)
+
+app.use("/paymentIntegration",paymentIntegration)
 
 
 // One-time index fix to drop unintended unique indexes that block registrations
@@ -78,6 +71,8 @@ const fixUserIndexes = async () => {
 }
 
 
+
+
 const initialConnection = async () => {
     try {
 
@@ -89,14 +84,24 @@ const initialConnection = async () => {
 
         // Connecting to Port Number
         app.listen(process.env.PORT, () => {
-            // Use PORT from environment variables, default to 3000 if not set
-            const port = process.env.PORT || 3000;
-            console.log(`Listening at port ${port}`);
+
+            console.log("Listening at port 3000")
         })
+
 
     } catch (error) {
         console.log("Error " + error)
+
     }
 }
 
-initialConnection();
+
+
+
+initialConnection()
+
+
+
+
+
+

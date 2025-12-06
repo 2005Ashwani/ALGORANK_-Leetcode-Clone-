@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-    baseURL: "https://leetcodes-5.onrender.com",   // that is the default URL
+    baseURL: "http://localhost:3000",   // that is the default URL
     withCredentials: true,  //
     headers: {
         'Content-Type': 'application/json'      // Sends the data in json formate
@@ -16,7 +16,4 @@ const axiosClient = axios.create({
 
 
 
-
 export default axiosClient
-
-
