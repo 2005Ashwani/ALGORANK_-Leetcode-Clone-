@@ -31,7 +31,24 @@ authRouter.post("/admin/register", adminMiddleware, adminRegister)
 authRouter.delete("/deleteProfile", adminMiddleware, deleteProfile)
 
 // To Get Detail After login
-authRouter.get("/check", userMiddleware, (req, res) => {
+// authRouter.get("/check", userMiddleware, (req, res) => {
+//     const reply = {
+//         firstName: req.result.firstName,
+//         email: req.result.email,
+//         _id: req.result._id,
+//         role: req.result.role,
+//     }
+
+//     res.status(200).json({
+//         user: reply,
+//         message: "User Authenticated"
+//     })
+// });
+
+
+
+
+authRouter.get("/check", (req, res) => {
     const reply = {
         firstName: req.result.firstName,
         email: req.result.email,
@@ -44,6 +61,10 @@ authRouter.get("/check", userMiddleware, (req, res) => {
         message: "User Authenticated"
     })
 });
+
+
+
+
 
 // Edit Profile 
 authRouter.post("/edit", userMiddleware, editProfile)
