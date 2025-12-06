@@ -1,18 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom"; // ADDED useNavigate
 import { useDispatch, useSelector } from "react-redux";
 import axiosClient from "../utils/axiosClient";
 import { logoutUser } from "../redux/authSlice";
 import { useEffect, useState } from "react";
-// Renamed the icon for clarity in the context of dark/light mode
 import { Sun, Moon } from "lucide-react";
 import { toggleTheme } from "../redux/Theme";
 
 function HomePage() {
-
+  const navigate = useNavigate(); // INITIALIZE useNavigate HOOK
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  // Reading the theme from Redux state (which is a string: 'light' or 'dark')
-  const { theme } = useSelector((state) => state.theme); 
+  const { theme } = useSelector((state) => state.theme);
 
   const [problem, setProblem] = useState([]);
   const [solvedProblem, setSolvedProblem] = useState([]);
@@ -102,15 +100,12 @@ function HomePage() {
 
   // UI
   return (
-    // 1. **Apply the theme using data-theme**
-    <div 
-        className="min-h-screen bg-base-200" 
-        data-theme={theme} // Uses 'light' or 'dark' 
+    <div
+      className="min-h-screen bg-base-200"
+      data-theme={theme} // Uses 'light' or 'dark'
     >
       {/* Navbar */}
-      <nav
-        className="navbar shadow-lg px-6 sticky top-0 z-50 bg-base-100"
-      >
+      <nav className="navbar shadow-lg px-6 sticky top-0 z-50 bg-base-100">
         <div className="flex items-center justify-between w-full">
           {/* Left Section – Logo */}
           <div className="flex items-center gap-2">
@@ -134,10 +129,8 @@ function HomePage() {
           {/* Right Section – Theme + Profile */}
           <div className="flex items-center gap-5">
             {/* Mode Toggle */}
-            {/* 🛑 FIX 1: Use handleToggleTheme function */}
-            <button onClick={handleToggleTheme}> 
-              {/* 🛑 FIX 2: Use theme string from Redux for conditional icon rendering */}
-              {theme === 'light' ? ( 
+            <button onClick={handleToggleTheme}>
+              {theme === "light" ? (
                 <Moon className="cursor-pointer hover:scale-110 transition-transform duration-200" />
               ) : (
                 <Sun className="cursor-pointer hover:scale-110 transition-transform duration-200" />
@@ -160,7 +153,7 @@ function HomePage() {
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-base-content" 
+                    className="h-4 w-4 text-base-content"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -298,9 +291,8 @@ function HomePage() {
                 <div className="card-body">
                   <button
                     className="card-title text-xl font-bold mb-2 text-success cursor-pointer hover:text-success-focus transition-colors duration-200"
-                    onClick={() =>
-                      (window.location.href = `/problem/${problemItem._id}`)
-                    }
+                    // UPDATED: Use navigate hook instead of window.location.href
+                    onClick={() => navigate(`/problem/${problemItem._id}`)}
                   >
                     {problemItem.tittle}
                   </button>
